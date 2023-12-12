@@ -1,10 +1,2 @@
 # spj-webserver
-
-Membuat Web Server dengan menggunakan :
-- 
--
--
--
--
--
--
+Membuat Web Server
