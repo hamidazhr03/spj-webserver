@@ -6,10 +6,10 @@ Repositori ini berisikan dokumentasi yang menjelaskan tahapan dalam instalasi da
 
 ## Daftar Isi
 
- - [Instalasi dan Konfigurasi SSH]
- - [Instalasi dan Konfigurasi Web Server]
- - [Instalasi dan Konfigurasi Monitoring Server]
- - [Instalasi dan Konfigurasi Honeypot]
+ - Instalasi dan Konfigurasi SSH
+ - Instalasi dan Konfigurasi Web Server
+ - Instalasi dan Konfigurasi Monitoring Server
+ - Instalasi dan Konfigurasi Honeypot
 
 ## Instalasi dan Konfigurasi SSH
 
@@ -216,3 +216,105 @@ Ubahlah permission user dan group prometheus yang ditambhkan pada direktori "/va
   sudo chown -R prometheus:prometheus /var/lib/prometheus
 ```
 ## Instalasi dan Konfigurasi Honeypot
+Membuat akun pengguna
+```bash
+sudo adduser --disable-password cowrie
+Adding user 'cowrie' ...
+Adding new group 'cowrie' (1002) ...
+Adding new user 'cowrie' (1002) with group 'cowrie' ...
+Changing the user information for cowrie
+Enter the new value, or press ENTER for the default
+Full Name []:
+Room Number []:
+Work Phone []:
+Home Phone []:
+Other []:
+Is the information correct? [Y/n]
+```
+
+Masuk ke dalam User Cowrie
+```bash
+sudo su - cowrie
+```
+
+Clone packages Cowrie dari github
+```bash
+git clone http://github.com/cowrie/cowrie
+```
+
+Masuk ke dalam directory Cowrie
+```bash
+cd Cowrie
+```
+
+Mmebuat Virtual 
+```bash
+$ pwd
+/home/cowrie/cowrie
+$ python -m venv cowrie-env
+New python executable in ./cowrie/cowrie-env/bin/python
+Installing setuptools, pip, wheel...done.
+Aktifkan lingkungan virtual dan instal paket:
+```
+
+Aktifkan virtual
+```bash
+$ source cowrie-env/bin/activate
+(cowrie-env) $ python -m pip install --upgrade pip
+(cowrie-env) $ python -m pip install --upgrade -r requirements.txt
+```
+
+
+Langkah 5: Instal file konfigurasi
+Konfigurasi untuk Cowrie disimpan di cowrie.cfg.dist dan cowrie.cfg (Terletak di cowrie/dll). Kedua file dibaca saat startup, dari mana entri berasal cowrie.cfg diutamakan. File .dist dapat ditimpa oleh upgrade, cowrie.cfg tidak akan disentuh. Untuk dijalankan dengan standar konfigurasi, tidak perlu mengubah apa pun. Untuk mengaktifkan telnet, misalnya, buat cowrie.cfg dan masukkan yang berikut ini saja:
+
+
+```bash
+[telnet]
+enabled = true
+```
+
+Langkah 6: Memulai Cowrie
+Mulai Cowrie dengan perintah cowrie. Anda dapat menambahkan cowrie/bin direktori ke jalur Anda jika diinginkan. Lingkungan virtual yang ada dipertahankan jika diaktifkan, jika tidak, Cowrie akan mencoba memuat lingkungan yang disebut "cowrie-env":
+```bash
+$ bin/cowrie start
+Activating virtualenv "cowrie-env"
+Starting cowrie with extra arguments [] ...
+```
+Langkah 7: Mendengarkan di port 22 (OPSIONAL)
+Ada tiga metode untuk membuat Cowrie dapat diakses pada port SSH default (22): iptables, authbind dan setcap.
+
+tabel ip
+Perintah pengalihan port berlaku untuk seluruh sistem dan perlu dijalankan sebagai root. Pengalihan firewall dapat membuat server SSH Anda tidak dapat dijangkau, ingatlah untuk memindahkan yang sudah ada server ke nomor port yang berbeda terlebih dahulu.
+Aturan firewall berikut akan meneruskan lalu lintas masuk pada port 22 ke port 2222 di Linux:
+```bash
+$ sudo iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port 2222
+Atau untuk telnet:
+
+$ sudo iptables -t nat -A PREROUTING -p tcp --dport 23 -j REDIRECT --to-port 2223
+Perhatikan bahwa Anda sebaiknya menguji aturan ini hanya dari host lain; itu tidak berlaku untuk koneksi loopback.
+```
+
+Alternatifnya, Anda dapat menjalankan authbind untuk mendengarkan sebagai non-root pada port 22 secara langsung:
+```bash
+$ sudo apt-get install authbind
+$ sudo touch /etc/authbind/byport/22
+$ sudo chown cowrie:cowrie /etc/authbind/byport/22
+$ sudo chmod 770 /etc/authbind/byport/22
+Edit bin/cowrie dan ubah pengaturan AUTHBIND_ENABLED
+
+Ubah port pendengaran menjadi 22 di cowrie.cfg:
+
+[ssh]
+listen_endpoints = tcp:22:interface=0.0.0.0
+Atau untuk telnet:
+
+$ apt-get install authbind
+$ sudo touch /etc/authbind/byport/23
+$ sudo chown cowrie:cowrie /etc/authbind/byport/23
+$ sudo chmod 770 /etc/authbind/byport/23
+Ubah port mendengarkan ke 23 di cowrie.cfg:
+
+[telnet]
+listen_endpoints = tcp:2223:interface=0.0.0.0
+````
