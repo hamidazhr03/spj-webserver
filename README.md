@@ -10,10 +10,10 @@ Repositori ini berisikan dokumentasi yang menjelaskan tahapan dalam instalasi da
 
 ## Daftar Isi
 
- - [Instalasi dan Konfigurasi SSH]()
- - [Instalasi dan Konfigurasi Web Server]()
- - [Instalasi dan Konfigurasi Monitoring Server]()
- - [Instalasi dan Konfigurasi Honeypot]()
+ - [Instalasi dan Konfigurasi SSH](https://github.com/hamidazhr03/spj-webserver/tree/main?tab=readme-ov-file#instalasi-dan-konfigurasi-ssh)
+ - [Instalasi dan Konfigurasi Web Server](https://github.com/hamidazhr03/spj-webserver/tree/main?tab=readme-ov-file#instalasi-dan-konfigurasi-web-server)
+ - [Instalasi dan Konfigurasi Monitoring Server](https://github.com/hamidazhr03/spj-webserver/tree/main?tab=readme-ov-file#instalasi-dan-konfigurasi-monitoring-server)
+ - [Instalasi dan Konfigurasi Honeypot]
 
 ## Instalasi dan Konfigurasi SSH
 
