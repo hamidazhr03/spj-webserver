@@ -1,7 +1,7 @@
 
 # Final Project Sistem Pertahanan Jaringan 
 
-	Repositori ini berisikan dokumentasi yang menjelaskan tahapan dalam instalasi dan juga konfigurasi Web Server dengan menambahkan Software Opensource sebagai pemonitoringnya serta menambahkan Honeypot sebagai keamanannya pada Ubuntu Server 22.04 LTS. Kelompok kami beranggotakan:
+Repositori ini berisikan dokumentasi yang menjelaskan tahapan dalam instalasi dan juga konfigurasi Web Server dengan menambahkan Software Opensource sebagai pemonitoringnya serta menambahkan Honeypot sebagai keamanannya pada Ubuntu Server 22.04 LTS. Kelompok kami beranggotakan:
 1. Rafli Ilham Prasetyo (22.83.0907)
 2. Elizabeth Nagita P.S.H. Zaxhawerus (22.83.0931)
 3. Muh. Faqih Muttaqin (22.83.0910)
